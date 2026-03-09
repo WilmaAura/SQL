@@ -21,8 +21,6 @@ lEFT JOIN penerbit15841 p
 WHERE p.penerbit_id IS NULL;
 
 
-
-
 SELECT * FROM view1_15841;
 
 SELECT * FROM view2_15841;
