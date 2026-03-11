@@ -32,6 +32,10 @@ INSERT INTO staf VALUES
 ("M01", "Budi", "Managaer", "1996-01-01", 10000000),
 ("S01", "Sari", "Supervisor", "2000-02-05", 7500000);
 
+SELECT * FROM staf;
+
+SELECT * FROM branch;
+
 SELECT nama, Gaji * 12 AS gaji_tahunan FROM staf;
 
 SELECT nama, Gaji * 0.2 AS tunjangan FROM staf;
