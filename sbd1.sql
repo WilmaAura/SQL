@@ -1,7 +1,6 @@
 -- Active: 1765006836152@@localhost@3306@db_usaha
 CREATE DATABASE db_usaha;
 
-show databases;
 
 CREATE TABLE branch (
     id_cabang CHAR(4) PRIMARY KEY,
@@ -20,7 +19,6 @@ CREATE TABLE staf (
 
 desc branch;
 desc staf;
-show tables;
 
 INSERT INTO branch VALUES ("B001", "Imam bonjol", "Semarang", 50131);
 INSERT INTO branch VALUES 
@@ -31,6 +29,7 @@ INSERT INTO staf VALUES
 ("A01", "Wahyu", "Asisten", "2014-08-10", 5000000),
 ("M01", "Budi", "Managaer", "1996-01-01", 10000000),
 ("S01", "Sari", "Supervisor", "2000-02-05", 7500000);
+
 
 SELECT * FROM staf;
 
