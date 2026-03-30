@@ -30,3 +30,10 @@ INSERT INTO Staff VALUES
 ('S001', 'Erick', 'Susanto', 'Manager', 'M', '1988-11-10', 8000000, 'B001'),
 ('S002', 'Ayu', 'Susanti', 'Supervisor', 'F', '1991-12-05', 6000000, 'B002'),
 ('S003', 'Dewangga', 'Saputro', 'Assistant', 'M', '1990-01-26', 3500000, 'B003');
+
+alter table Staff change position position varchar(10) NOT NULL;
+
+alter table Staff change sex sex CHAR(1) NOT NULL CHECK (sex IN('M', 'F'));
+
+desc Staff;
+
