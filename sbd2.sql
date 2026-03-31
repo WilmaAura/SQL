@@ -39,21 +39,33 @@ desc Staff;
 
 drop table pegawai;
 
+-- SALAH
+-- CREATE TABLE pegawai (
+--     nip CHAR(5) PRIMARY KEY,
+--     Nama VARCHAR(25) NOT NULL,
+--     Jns_kel CHAR(1) NOT NULL CHECK(jns_kel IN ('L', 'P')),
+--     Usia INT NOT NULL,
+--     Gaji INT,
+--     branchNo CHAR(4) NOT NULL, 
+--     Id_position INT DEFAULT 1,
+
+--     CONSTRAINT fk_branch FOREIGN KEY(branchNo) REFERENCES Branch(branchNO),
+--     CONSTRAINT fk_posisi FOREIGN KEY(Id_position) REFERENCES Position(ID_position)  
+-- );
 
 CREATE TABLE pegawai (
     nip CHAR(5) PRIMARY KEY,
     Nama VARCHAR(25) NOT NULL,
-    Jns_kel CHAR(1) NOT NULL CHECK(jns_kel IN ('L', 'P')),
-    Usia INT NOT NULL,
-    Gaji INT,
+    Jns_kel CHAR(1) NOT NULL CHECK (Jns_kel IN ('L', 'P')),
+    Usia INT NOT NULL CHECK (Usia >= 18),
+    ID_position INT DEFAULT 1,
+    Gaji INT NULL,
     branchNo CHAR(4) NOT NULL, 
-    Id_position INT DEFAULT 1,
-
-    CONSTRAINT fk_branch FOREIGN KEY(branchNo) REFERENCES Branch(branchNO),
-    CONSTRAINT fk_posisi FOREIGN KEY(Id_position) REFERENCES Position(ID_position)  
+    CONSTRAINT fk_posisi FOREIGN KEY (ID_position) REFERENCES `Position`(ID_osition),
+    CONSTRAINT fk_cabang FOREIGN KEY (branchNo) REFERENCES Branch(branchNo)
 );
 
-
+desc `Position`;
 
 -- alter table pegawai
 -- ADD CONSTRAINT fk_branch
@@ -67,3 +79,5 @@ CREATE TABLE pegawai (
 
 -- show tables;
 -- desc Position;
+
+
