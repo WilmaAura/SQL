@@ -50,3 +50,5 @@ CALL SP3(5000000, 5500000);
 DROP PROCEDURE SP3;
 
 SHOW PROCEDURE status;
+
+create database latSBD_4
