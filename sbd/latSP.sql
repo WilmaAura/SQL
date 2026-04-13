@@ -43,3 +43,8 @@ CREATE PROCEDURE Hapus_obat (kd_obat_paramater CHAR(5))
 begin
 DELETE FROM `Obat`
 WHERE `Kd_obat` = kd_obat_parameter;
+END //
+
+DELIMITER;
+
+
