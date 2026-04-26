@@ -46,5 +46,3 @@ WHERE `Kd_obat` = kd_obat_parameter;
 END //
 
 DELIMITER;
-
-
