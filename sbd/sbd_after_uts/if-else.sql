@@ -7,6 +7,10 @@
         - Pengaturan akses: Mengecek level user sebelum mengizinkan menghapus data
 */
 
+/* 
+    Ganjil dan genap menggunakan if else
+ */
+
 show tables;
 
 
