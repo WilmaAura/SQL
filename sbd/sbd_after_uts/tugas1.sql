@@ -26,3 +26,4 @@ INSERT INTO barang VALUES
 SELECT kode_brg, nama_brg, harga,
 IF (id_kategori = "ELK", "Diskon 10%", IF(id_kategori="PKN", "Diskon 5%", "Tidak Ada Diskon")) AS Keterangan FROM barang;
 
+CREATE FUNCTION beli_barang (jml_beli INT, kode CHAR(5),) RETURNS CHAR(30)
