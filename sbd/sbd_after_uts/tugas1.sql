@@ -26,4 +26,17 @@ INSERT INTO barang VALUES
 SELECT kode_brg, nama_brg, harga,
 IF (id_kategori = "ELK", "Diskon 10%", IF(id_kategori="PKN", "Diskon 5%", "Tidak Ada Diskon")) AS Keterangan FROM barang;
 
-CREATE FUNCTION beli_barang (jml_beli INT, kode CHAR(5),) RETURNS CHAR(30)
+DELIMITER //
+CREATE FUNCTION beli_barang (jml_beli INT, kode CHAR(5)) RETURNS CHAR(30)
+BEGIN
+DECLARE stok_s INT;
+DECLARE status CHAR(30);
+SELECT stok into stok_s FROM barang WHERE kode_brg = kode;
+IF stok_s > jml_beli THEN
+    SET status = "Jml melebihi stok";
+Else
+    SET status = "Pembelian berhasil";
+RETURN status;
+
+END //
+DELIMITER;
