@@ -23,6 +23,7 @@ INSERT INTO barang VALUES
 
 /* Latihan */
 
+SELECT * FROM barang;
 SELECT kode_brg, nama_brg, harga,
 IF (id_kategori = "ELK", "Diskon 10%", IF(id_kategori="PKN", "Diskon 5%", "Tidak Ada Diskon")) AS Keterangan FROM barang;
 
@@ -32,11 +33,24 @@ BEGIN
 DECLARE stok_s INT;
 DECLARE status CHAR(30);
 SELECT stok into stok_s FROM barang WHERE kode_brg = kode;
-IF stok_s > jml_beli THEN
+IF jml_beli > stok_s THEN
     SET status = "Jml melebihi stok";
 Else
     SET status = "Pembelian berhasil";
+END IF;
 RETURN status;
 
 END //
 DELIMITER;
+
+DROP FUNCTION IF EXISTS beli_barang
+
+SELECT beli_barang(1, "E0001");
+
+SELECT kode_brg, nama_brg,
+    CASE id_kategori
+        WHEN "ELK" THEN "Elektronik"
+        WHEN "PKN" THEN "Pakaian"
+        WHEN "SPT" THEN "Sepatu"
+    END AS kategori, harga
+FROM barang;
