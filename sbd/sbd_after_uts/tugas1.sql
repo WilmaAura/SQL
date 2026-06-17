@@ -39,14 +39,9 @@ Else
     SET status = "Pembelian berhasil";
 END IF;
 RETURN status;
-
 END //
-DELIMITER;
-
-DROP FUNCTION IF EXISTS beli_barang
-
+SELECT beli_barang(11, "E0001");
 SELECT beli_barang(1, "E0001");
-
 SELECT kode_brg, nama_brg,
     CASE id_kategori
         WHEN "ELK" THEN "Elektronik"
@@ -54,3 +49,5 @@ SELECT kode_brg, nama_brg,
         WHEN "SPT" THEN "Sepatu"
     END AS kategori, harga
 FROM barang;
+
+CREATE database siswa_db
