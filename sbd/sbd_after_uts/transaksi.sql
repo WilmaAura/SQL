@@ -56,10 +56,36 @@ VALUES ('ANDI', 100000.00), ('WATI', 500000.00);
 
 select * from accounts;
 
-DELIMITER //
+DELIMITER //  -- 1. Ubah delimiter dulu
+
 CREATE PROCEDURE transfer (IN sender_id INT, IN receiver_id INT, IN amount DECIMAL(10,2))
 BEGIN 
-DECLARE rollback_massage VARCHAR(255)
-DEFAULT 'Transaction Rolledback: Dana tidak cukup';
-DECLARE commist_message VARCHAR(255)
-DEFAULT 'Transaction Commited Success'
+    DECLARE rollback_message VARCHAR(255) DEFAULT 'Transaction Rolledback: Dana tidak cukup';
+    DECLARE commit_message VARCHAR(2 55) DEFAULT 'Transaction Commited Successfully';
+
+    START TRANSACTION;
+
+    UPDATE accounts SET balance = balance - amount WHERE account_id = sender_id;
+    UPDATE accounts SET balance = balance + amount WHERE account_id = receiver_id;
+
+    IF (SELECT balance FROM accounts WHERE account_id = sender_id) < 0 THEN 
+        ROLLBACK;
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = rollback_message; -- Pastikan nulisnya sebaris ini
+    ELSE 
+        INSERT INTO transactions(account_id, amount, transaction_type) VALUES (sender_id, amount, 'WITHDRAW');
+        INSERT INTO transactions(account_id, amount, transaction_type) VALUES (receiver_id, amount, 'DEPOSIT');
+        COMMIT;
+        SELECT commit_message AS 'Result';
+    END IF;
+END //        -- 2. Tutup procedure dengan delimiter baru
+
+DELIMITER ;   -- 3. Kembalikan ke delimiter semula
+
+SELECT * FROM accounts;
+
+call transfer(1,2,25000);
+
+SELECT * FROM transactions;
+call transfer(1,2,900000);
+SELECT * FROM transactions;
+
