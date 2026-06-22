@@ -85,7 +85,24 @@ SELECT * FROM accounts;
 
 call transfer(1,2,25000);
 
+SELECT * FROM accounts;
 SELECT * FROM transactions;
 call transfer(1,2,900000);
 SELECT * FROM transactions;
+
+DELIMITER//
+
+CREATE PROCEDURE Deposit (in ID int, in amount Decimal(10,2))
+BEGIN
+
+INSERT into transactions (account_id, amount) VALUES (ID, amount) ;
+UPDATE accounts SET balance = balance + amount where account_id = ID;
+
+COMMIT;
+SELECT * FROM transactions;
+END//
+
+DELIMITER;
+
+CALL Deposit();
 

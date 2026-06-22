@@ -9,4 +9,3 @@ CREATE TABLE obat (
     expired_date date,
     supplier CHAR (15)
 );
-gi
