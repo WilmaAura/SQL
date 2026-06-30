@@ -56,7 +56,7 @@ VALUES ('ANDI', 100000.00), ('WATI', 500000.00);
 
 select * from accounts;
 
-DELIMITER //  -- 1. Ubah delimiter dulu
+DELIMITER 
 
 CREATE PROCEDURE transfer (IN sender_id INT, IN receiver_id INT, IN amount DECIMAL(10,2))
 BEGIN 
@@ -70,17 +70,16 @@ BEGIN
 
     IF (SELECT balance FROM accounts WHERE account_id = sender_id) < 0 THEN 
         ROLLBACK;
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = rollback_message; -- Pastikan nulisnya sebaris ini
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = rollback_message;
     ELSE 
         INSERT INTO transactions(account_id, amount, transaction_type) VALUES (sender_id, amount, 'WITHDRAW');
         INSERT INTO transactions(account_id, amount, transaction_type) VALUES (receiver_id, amount, 'DEPOSIT');
         COMMIT;
         SELECT commit_message AS 'Result';
     END IF;
-END //        -- 2. Tutup procedure dengan delimiter baru
+END 
 
-DELIMITER ;   -- 3. Kembalikan ke delimiter semula
-
+DELIMITER ;   
 SELECT * FROM accounts;
 
 call transfer(1,2,25000);
@@ -95,6 +94,7 @@ DELIMITER//
 CREATE PROCEDURE Deposit (in ID int, in amount Decimal(10,2))
 BEGIN
 
+START TRANSACTION;
 INSERT into transactions (account_id, amount) VALUES (ID, amount) ;
 UPDATE accounts SET balance = balance + amount where account_id = ID;
 
@@ -107,3 +107,32 @@ DELIMITER;
 
 CALL Deposit(1, 10000.00);
 
+delimiter//
+
+CREATE PROCEDURE Tarik_tunai (in id int, in amount decimal(10,2))
+BEGIN
+
+DECLARE rollback_mssg VARCHAR(100) DEFAULT  'Dana tidak cukkup'; 
+DECLARE commit_mssg VARCHAR(100) DEFAULT  'Transaksi sukses'; 
+
+START TRANSACTION;
+
+UPDATE accounts
+SET balance = balance - amount
+where account_id = id;
+
+IF (SELECT balance FROM accounts WHERE account_id = id) < 0 THEN 
+    ROLLBACK;
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = rollback_mssg;
+ELSE   
+    INSERT INTO transactions (account_id,  amount, transaction_type)
+    values (id, amount, 'WITHDRAW');
+    commit;
+    SELECT commit_mssg AS 'Result';
+END IF;
+
+END//
+DELIMITER;
+
+SELECT * FROM accounts;
+call Tarik_tunai(1, 10000);
