@@ -136,3 +136,4 @@ DELIMITER;
 
 SELECT * FROM accounts;
 call Tarik_tunai(1, 10000);
+call Tarik_tunai(1, 50000);
