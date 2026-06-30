@@ -102,7 +102,8 @@ COMMIT;
 SELECT * FROM transactions;
 END//
 
+SELECT * FROM accounts;
 DELIMITER;
 
-CALL Deposit();
+CALL Deposit(1, 10000.00);
 
